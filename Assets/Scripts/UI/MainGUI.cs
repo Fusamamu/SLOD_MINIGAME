@@ -9,6 +9,10 @@ namespace MUGCUP
     {
         public ButtonUI MenuButton;
         public ButtonUI QuitButton;
+
+        public GameObject GameOverUI;
+        public ButtonUI ContinueButton;
+        public ButtonUI CancelContinueButton;
         
         public override void Init()
         {
@@ -24,6 +28,18 @@ namespace MUGCUP
             QuitButton.Button.onClick.AddListener(() =>
             {
                 GlobalSceneManager.Instance.LoadScene("StartMenuScene");
+            });
+            
+            ContinueButton.OnClickAnimation.Events.OnComplete.AddListener(() =>
+            {
+                GameOverUI.SetActive(false);
+                GlobalSceneManager.Instance.LoadScene(SceneName.GameplayScene);
+            });
+            
+            CancelContinueButton.OnClickAnimation.Events.OnComplete.AddListener(() =>
+            {
+                GameOverUI.SetActive(false);
+                GlobalSceneManager.Instance.LoadScene(SceneName.StartMenuScene);
             });
         }
     }

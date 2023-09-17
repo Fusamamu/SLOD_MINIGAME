@@ -12,11 +12,13 @@ namespace MUGCUP
         public bool IsInit { get; private set; }
 
         [SerializeField] private int Health;
+        [SerializeField] private int Score;
         
         [field: SerializeField] public MoveControl           MoveControl      { get; private set; }
         [field: SerializeField] public ColliderControl       ColliderControl  { get; private set; }
         [field: SerializeField] public EnemyAnimationControl AnimationControl { get; private set; }
 
+        private DataManager  dataManager;
         private EnemyManager enemyManager;
         private AudioManager audioManager;
         
@@ -46,6 +48,7 @@ namespace MUGCUP
             
             AnimationControl.PlayAnimation(AnimationName.ON_WALKING);
 
+            dataManager  = ServiceLocator.Instance.Get<DataManager>();
             audioManager = ServiceLocator.Instance.Get<AudioManager>();
         }
 
@@ -58,6 +61,7 @@ namespace MUGCUP
                 var _particleUnit = ServiceLocator.Instance.Get<ParticleManager>().Pool.Pool?.Get();
                 if (_particleUnit)
                 {
+                    _particleUnit.transform.position = transform.position;
                     _particleUnit
                         .SelectParticle(ParticleType.LARGE_BULLET_HIT)
                         .Play();
@@ -79,9 +83,12 @@ namespace MUGCUP
                 _bullet.ReturnToPool();
                 
                 AnimationControl.PlayAnimation(AnimationName.ON_HIT);
-                
-                if(Health <= 0)
+
+                if (Health <= 0)
+                {
+                    dataManager.IncreaseScore(Score);
                     Destroy(gameObject);
+                }
             }
         }
 

@@ -26,6 +26,7 @@ namespace MUGCUP
 
         private void Start()
         {
+            Get<DataManager>    ().Init();
             Get<AudioManager>   ().Init();
             Get<UIManager>      ().Init();
             Get<ParticleManager>().Init();

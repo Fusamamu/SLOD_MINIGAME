@@ -14,10 +14,17 @@ namespace MUGCUP
         [field: SerializeField] public ColliderControl       ColliderControl       { get; private set; }
         [field: SerializeField] public TowerAnimationControl TowerAnimationControl { get; private set; }
 
+        private PlayerManager playerManager;
         private AudioManager  audioManager;
         private BulletManager bulletManager;
 
         private bool keepShooting;
+
+        public Tower SetPlayerManager(PlayerManager _playerManager)
+        {
+            playerManager = _playerManager;
+            return this;
+        }
 
         public void Init()
         {
@@ -32,63 +39,44 @@ namespace MUGCUP
             bulletManager = ServiceLocator.Instance.Get<BulletManager>();
 
             var _itemSlotGUI = ServiceLocator.Instance.Get<UIManager>().Get<ItemSlotGUI>();
-
             foreach (var _kvp in _itemSlotGUI.ItemSlotTable)
-            {
-                switch (_kvp.Key)
-                {
-                    case ItemType.SMALL_BULLET:
-                        _kvp.Value.OnItemUsed += (_slot, _type) =>
-                        {
-                            bulletManager
-                                .SelectBullet(BulletType.SMALL)
-                                .ShootBulletFrom(BulletSpawnTarget.position);
-                        };
-                        break;
-                    case ItemType.LARGE_BULLET:
-                        _kvp.Value.OnItemUsed += (_slot, _type) =>
-                        {
-                            bulletManager
-                                .SelectBullet(BulletType.LARGE)
-                                .ShootBulletFrom(BulletSpawnTarget.position);
-                        };
-                        break;
-                    
-                    case ItemType.TRAP:
-                        _kvp.Value.OnItemUsed += (_slot, _type) =>
-                        {
-                            bulletManager
-                                .SelectBullet(BulletType.TRAP)
-                                .ShootBulletFrom(BulletSpawnTarget.position);
-                        };
-                        break;
-                    
-                    case ItemType.LARGE_AIR_SUPPORT:
-                        _kvp.Value.OnItemUsed += (_slot, _type) =>
-                        {
-                            bulletManager
-                                .SelectBullet(BulletType.LARGE_AIR_SUPPORT)
-                                .ShootAirSupport();
-                        };
-                        break;
-                    
-                    case ItemType.SMALL_AIR_SUPPORT:
-                        _kvp.Value.OnItemUsed += (_slot, _type) =>
-                        {
-                            // bulletManager
-                            //     .SelectBullet(BulletType.TRAP)
-                            //     .ShootBulletFrom(BulletSpawnTarget.position);
-                        };
-                        break;
-                }
-            }
+                _kvp.Value.OnItemUsed += OnShootHandler;
         }
 
-        // public void StartShooting()
-        // {
-        //     keepShooting = true;
-        //     StartCoroutine(ShootBulletCoroutine());
-        // }
+        private void OnShootHandler(ItemSlot _itemSlot, ItemType _type)
+        {
+            switch (_type)
+            {
+                case ItemType.SMALL_BULLET:
+                        bulletManager
+                            .SelectBullet(BulletType.SMALL)
+                            .ShootBulletFrom(BulletSpawnTarget.position);
+                    break;
+                case ItemType.LARGE_BULLET:
+                        bulletManager
+                            .SelectBullet(BulletType.LARGE)
+                            .ShootBulletFrom(BulletSpawnTarget.position);
+                    break;
+                    
+                case ItemType.TRAP:
+                        bulletManager
+                            .SelectBullet(BulletType.TRAP)
+                            .ShootBulletFrom(BulletSpawnTarget.position);
+                    break;
+                    
+                case ItemType.LARGE_AIR_SUPPORT:
+                        bulletManager
+                            .SelectBullet(BulletType.LARGE_AIR_SUPPORT)
+                            .ShootAirSupport();
+                    break;
+                    
+                case ItemType.SMALL_AIR_SUPPORT:
+                        // bulletManager
+                        //     .SelectBullet(BulletType.TRAP)
+                        //     .ShootBulletFrom(BulletSpawnTarget.position);
+                    break;
+            }
+        }
 
         private IEnumerator ShootBulletCoroutine()
         {
@@ -113,7 +101,15 @@ namespace MUGCUP
                 Destroy(_enemy.gameObject);
                 TowerAnimationControl.PlayAnimation(AnimationName.ON_HIT);
                 audioManager.Play(SoundType.TOWER_HIT);
+                playerManager.ReduceHealth();
             }
+        }
+
+        private void OnDestroy()
+        {
+            var _itemSlotGUI = ServiceLocator.Instance.Get<UIManager>().Get<ItemSlotGUI>();
+            foreach (var _kvp in _itemSlotGUI.ItemSlotTable)
+                _kvp.Value.OnItemUsed -= OnShootHandler;
         }
     }
 }

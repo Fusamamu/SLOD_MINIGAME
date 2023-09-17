@@ -5634,6 +5634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 3
+  Score: 10
   <MoveControl>k__BackingField: {fileID: 5949072100990970068}
   <ColliderControl>k__BackingField: {fileID: 5949072100990970069}
   <AnimationControl>k__BackingField: {fileID: 5949072100990970074}

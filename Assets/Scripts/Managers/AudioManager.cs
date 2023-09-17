@@ -32,6 +32,9 @@ namespace MUGCUP
 
         private Dictionary<SoundType, AudioClip> soundTable = new Dictionary<SoundType, AudioClip>();
 
+        public bool BGMOn { get; private set; } = true;
+        public bool SFXOn { get; private set; } = true;
+
         public override void Init()
         {
             if(IsInit)
@@ -54,6 +57,18 @@ namespace MUGCUP
                 Source.clip = _audioClip;
                 Source.PlayOneShot(_audioClip);
             }
+        }
+
+        public void ToggleBGM()
+        {
+            BGMOn = !BGMOn;
+            BGMSource.enabled = BGMOn;
+        }
+
+        public void ToggleSFX()
+        {
+            SFXOn = !SFXOn;
+            Source.enabled = SFXOn;
         }
     }
 }

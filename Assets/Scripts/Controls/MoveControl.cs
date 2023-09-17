@@ -91,6 +91,13 @@ namespace MUGCUP
                 .OnComplete(_callback);
         }
         
+        public void MoveHorizontalImmediate(float _targetX)
+        {
+            var _position  = Target.transform.position;
+            var _targetPos = new Vector3(_targetX, _position.y, _position.z);
+            Target.transform.position = _targetPos;
+        }
+        
         public void MoveVertical(float _targetY, TweenCallback _callback = null)
         {
             StopMove();
@@ -103,7 +110,14 @@ namespace MUGCUP
                 .SetEase(Ease.InOutExpo)
                 .OnComplete(_callback);
         }
-        
+
+        public void MoveVerticalImmediate(float _targetY)
+        {
+            var _position  = Target.transform.position;
+            var _targetPos = new Vector3(_position.x, _targetY, _position.z);
+            Target.transform.position = _targetPos;
+        }
+
         private void StopMove()
         {
             if (moveProcess != null)

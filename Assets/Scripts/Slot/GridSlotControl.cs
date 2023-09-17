@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace MUGCUP
 {
@@ -11,6 +13,8 @@ namespace MUGCUP
         [field: SerializeField] public int CurrentSelectedRow    { get; private set; }
         [field: SerializeField] public int CurrentSelectedColumn { get; private set; }
 
+        [SerializeField] private SlotSelectionGizmos HorizontalCursor;
+        [SerializeField] private SlotSelectionGizmos VerticalCursor;
         [SerializeField] private SlotSelectionGizmos RowSelectionGizmos;
         [SerializeField] private SlotSelectionGizmos ColumnSelectionGizmos;
 
@@ -22,54 +26,31 @@ namespace MUGCUP
                 return;
             IsInit = true;
             
+            GridSlotData.Init();
+            HorizontalCursor     .Init();
+            VerticalCursor       .Init();
             RowSelectionGizmos   .Init();
             ColumnSelectionGizmos.Init();
-	        
-            GridSlotData.Init();
-
-            GlobalInputManager.Instance.GameController.SlotSelection.MoveUp.performed += _context =>
-            {
-                MoveRowSelectionUp();
-            };
             
-            GlobalInputManager.Instance.GameController.SlotSelection.MoveDown.performed += _context =>
-            {
-                MoveRowSelectionDown();
-            };
-            
-            GlobalInputManager.Instance.GameController.SlotSelection.MoveRight.performed += _context =>
-            {
-                MoveColumnRight();
-            };
-            
-            GlobalInputManager.Instance.GameController.SlotSelection.MoveLeft.performed += _context =>
-            {
-                MoveColumnLeft();
-            };
+            var _targetHeight = GridSlotData.GetRowHeightAt  (2);
+            var _targetWidth  = GridSlotData.GetColumnWidthAt(2);
+            HorizontalCursor     .MoveControl.MoveHorizontalImmediate(_targetHeight);
+            VerticalCursor       .MoveControl.MoveVerticalImmediate(_targetWidth);
+            RowSelectionGizmos   .MoveControl.MoveVerticalImmediate  (_targetHeight);
+            ColumnSelectionGizmos.MoveControl.MoveHorizontalImmediate(_targetWidth);
 
-            GlobalInputManager.Instance.GameController.SlotSelection.SlideLeft.performed += _ =>
-            {
-                SlideLeftSelectedRow();
-            };
-
-            GlobalInputManager.Instance.GameController.SlotSelection.SlideRight.performed += _ =>
-            {
-                SlideRightSelectedRow();
-            };
-            
-            GlobalInputManager.Instance.GameController.SlotSelection.SlideUp.performed += _ =>
-            {
-                SlideUpSelectedColumn();
-            };
-
-            GlobalInputManager.Instance.GameController.SlotSelection.SlideDown.performed += _ =>
-            {
-                SlideDownSelectedColumn();
-            };
+            GlobalInputManager.Instance.GameController.SlotSelection.MoveUp    .performed += MoveRowSelectionUp;
+            GlobalInputManager.Instance.GameController.SlotSelection.MoveDown  .performed += MoveRowSelectionDown;
+            GlobalInputManager.Instance.GameController.SlotSelection.MoveRight .performed += MoveColumnRight;
+            GlobalInputManager.Instance.GameController.SlotSelection.MoveLeft  .performed += MoveColumnLeft;
+            GlobalInputManager.Instance.GameController.SlotSelection.SlideLeft .performed += SlideLeftSelectedRow;
+            GlobalInputManager.Instance.GameController.SlotSelection.SlideRight.performed += SlideRightSelectedRow;
+            GlobalInputManager.Instance.GameController.SlotSelection.SlideUp   .performed += SlideUpSelectedColumn;
+            GlobalInputManager.Instance.GameController.SlotSelection.SlideDown .performed += SlideDownSelectedColumn;
         }
 
 #region Move Row/Colum Selection Gizmos
-        public void MoveRowSelectionUp()
+        public void MoveRowSelectionUp(InputAction.CallbackContext _callbackContext)
         {
             var _nextRow = CurrentSelectedRow + 1;
 
@@ -79,9 +60,10 @@ namespace MUGCUP
             var _targetHeight = GridSlotData.GetRowHeightAt(CurrentSelectedRow);
             
             RowSelectionGizmos.MoveControl.MoveVertical(_targetHeight);
+            VerticalCursor    .MoveControl.MoveVertical(_targetHeight);
         }
 
-        public void MoveRowSelectionDown()
+        public void MoveRowSelectionDown(InputAction.CallbackContext _callbackContext)
         {
             var _nextRow = CurrentSelectedRow - 1;
             
@@ -91,9 +73,10 @@ namespace MUGCUP
             var _targetHeight = GridSlotData.GetRowHeightAt(CurrentSelectedRow);
             
             RowSelectionGizmos.MoveControl.MoveVertical(_targetHeight);
+            VerticalCursor    .MoveControl.MoveVertical(_targetHeight);
         }
 
-        private void MoveColumnRight()
+        private void MoveColumnRight(InputAction.CallbackContext _callbackContext)
         {
             var _nextColumn = CurrentSelectedColumn + 1;
 
@@ -103,9 +86,10 @@ namespace MUGCUP
             var _targetWidth = GridSlotData.GetColumnWidthAt(CurrentSelectedColumn);
             
             ColumnSelectionGizmos.MoveControl.MoveHorizontal(_targetWidth);
+            HorizontalCursor     .MoveControl.MoveHorizontal(_targetWidth);
         }
 
-        private void MoveColumnLeft()
+        private void MoveColumnLeft(InputAction.CallbackContext _callbackContext)
         {
             var _nextColumn = CurrentSelectedColumn - 1;
             
@@ -115,37 +99,40 @@ namespace MUGCUP
             var _targetWidth = GridSlotData.GetColumnWidthAt(CurrentSelectedColumn);
             
             ColumnSelectionGizmos.MoveControl.MoveHorizontal(_targetWidth);
+            HorizontalCursor     .MoveControl.MoveHorizontal(_targetWidth);
         }
 #endregion
 
-        private void SlideLeftSelectedRow()
+        private void SlideLeftSelectedRow(InputAction.CallbackContext _callbackContext)
         {
             GridSlotData.SlideSlots(CurrentSelectedRow, CurrentSelectedColumn, GridSlotData.SlideDirection.LEFT);
         }
 
-        private void SlideRightSelectedRow()
+        private void SlideRightSelectedRow(InputAction.CallbackContext _callbackContext)
         {
             GridSlotData.SlideSlots(CurrentSelectedRow, CurrentSelectedColumn,  GridSlotData.SlideDirection.RIGHT);
         }
 
-        private void SlideUpSelectedColumn()
+        private void SlideUpSelectedColumn(InputAction.CallbackContext _callbackContext)
         {
             GridSlotData.SlideSlots(CurrentSelectedRow, CurrentSelectedColumn,  GridSlotData.SlideDirection.UP);
         }
 
-        private void SlideDownSelectedColumn()
+        private void SlideDownSelectedColumn(InputAction.CallbackContext _callbackContext)
         {
             GridSlotData.SlideSlots(CurrentSelectedRow, CurrentSelectedColumn,  GridSlotData.SlideDirection.DOWN);
         }
 
-        public void SelectRow(int _row)
+        private void OnDestroy()
         {
-            CurrentSelectedRow = _row;
-        }
-
-        public void SelectColumn(int _column)
-        {
-            CurrentSelectedColumn = _column;
+            GlobalInputManager.Instance.GameController.SlotSelection.MoveUp    .performed -= MoveRowSelectionUp;
+            GlobalInputManager.Instance.GameController.SlotSelection.MoveDown  .performed -= MoveRowSelectionDown;
+            GlobalInputManager.Instance.GameController.SlotSelection.MoveRight .performed -= MoveColumnRight;
+            GlobalInputManager.Instance.GameController.SlotSelection.MoveLeft  .performed -= MoveColumnLeft;
+            GlobalInputManager.Instance.GameController.SlotSelection.SlideLeft .performed -= SlideLeftSelectedRow;
+            GlobalInputManager.Instance.GameController.SlotSelection.SlideRight.performed -= SlideRightSelectedRow;
+            GlobalInputManager.Instance.GameController.SlotSelection.SlideUp   .performed -= SlideUpSelectedColumn;
+            GlobalInputManager.Instance.GameController.SlotSelection.SlideDown .performed -= SlideDownSelectedColumn;
         }
     }
 }

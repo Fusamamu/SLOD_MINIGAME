@@ -74,5 +74,10 @@ namespace MUGCUP
             CurrentItemCount = MaxItemCount;
             ItemCount.SetText($"{CurrentItemCount}");
         }
+
+        private void OnDestroy()
+        {
+            OnItemUsed = null;
+        }
     }
 }

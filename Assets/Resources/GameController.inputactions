@@ -1,0 +1,282 @@
+{
+    "name": "GameController",
+    "maps": [
+        {
+            "name": "SlotSelection",
+            "id": "0ddd7281-2673-4343-8d79-a779afb92401",
+            "actions": [
+                {
+                    "name": "MoveUp",
+                    "type": "Button",
+                    "id": "830451ef-55e7-44f0-96de-1c28386d5be0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MoveDown",
+                    "type": "Button",
+                    "id": "96dd7f48-967d-447b-b6d7-cc65954ac4ce",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MoveRight",
+                    "type": "Button",
+                    "id": "5d79afc3-35ec-49f8-908d-40737927549d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MoveLeft",
+                    "type": "Button",
+                    "id": "dea1e138-7d8e-4ba7-b3c8-110ff65b5a38",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SlideLeft",
+                    "type": "Button",
+                    "id": "0a241e89-b6a7-4270-9cff-3eadc2d47b5d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SlideRight",
+                    "type": "Button",
+                    "id": "2cf6f7e5-2933-4891-9e9e-777cc7bd773b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SlideUp",
+                    "type": "Button",
+                    "id": "5a1c7e4c-f45a-4bbe-a949-667ee85c0059",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SlideDown",
+                    "type": "Button",
+                    "id": "92074958-5f7f-440c-b615-8f158a9b297c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "38a9c620-cc06-425a-98d3-4902de709910",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e7e889b2-3ad4-4348-961c-96fc23b8be06",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "636e8ea4-3d58-45de-b5b6-a0a09a328af0",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7bd0da64-0464-460f-a164-7e7dfa55f32b",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ebae5d44-430a-4136-9bf4-52014216ab21",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SlideLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "46038e25-6a8a-4226-8781-35abf017d200",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SlideRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2c385709-01fd-4a46-9c99-10a22469cc45",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SlideUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "78ebda3d-6e94-4a58-b438-88a91c160ae8",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SlideDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "ItemSelection",
+            "id": "4d76f874-0833-4a68-a555-42c844aaa3e9",
+            "actions": [
+                {
+                    "name": "UseSlot_1st",
+                    "type": "Button",
+                    "id": "7cae45aa-e6da-4d3f-b28d-f008edf21c1b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UseSlot_2nd",
+                    "type": "Button",
+                    "id": "2bca6a79-56ea-40f6-b3a0-842ae4428096",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UseSlot_3rd",
+                    "type": "Button",
+                    "id": "75ac5792-d386-4ef2-b2a4-2fa638de4e14",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UseSlot_4st",
+                    "type": "Button",
+                    "id": "0a4b1ee7-b5e8-47a4-b254-e8dfb2a7c4be",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UseSlot_5st",
+                    "type": "Button",
+                    "id": "bae37fc4-35e9-4384-a052-aa789758523a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "96597797-4d81-4dce-90b4-dad476f53a61",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseSlot_1st",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d221fb12-0989-434e-b48c-464d5e39730f",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseSlot_2nd",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b699d4ac-f11f-4ef3-8e8b-df95d0824d97",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseSlot_3rd",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2b1ca33b-31fb-4679-9b9a-5d939cc13fff",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseSlot_4st",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d6075bca-2a39-44b9-b50f-4b30e4382964",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseSlot_5st",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
